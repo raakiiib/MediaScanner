@@ -21,8 +21,6 @@ function exceptions_error_handler($severity, $message, $filename, $lineno) {
 if(isset($_GET["type"])){
 	$type = ltrim($_GET["type"],'/');
 	$type=rtrim($type,'/');
-
-    echo $type;
 }
 
 
