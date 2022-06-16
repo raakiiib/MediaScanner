@@ -7,25 +7,29 @@ if(isset($_GET["f"])){
 }
 
 // Run the recursive function
-$response = scan('../'.$dir);
+$folder_name=$_SERVER["DOCUMENT_ROOT"].'/files/'.$dir;
+$domain = "http://".$_SERVER['SERVER_NAME'];
+
+// $response = scan('../'.$dir);
+$response = scan($folder_name);
 
 
 // This function scans the files folder recursively, and builds a large array
-function scan($dir){
+function scan($folder_name){
 
 	$files = array();
 
 	// Is there actually such a folder/file?
 
-	if(file_exists($dir)){
+	if(file_exists($folder_name)){
 	
-		foreach(scandir($dir) as $f) {
+		foreach(scandir($folder_name) as $f) {
 		
 			if(!$f || $f[0] == '.') {
 				continue; // Ignore hidden files
 			}
 
-			if(is_dir($dir . '/' . $f)) {
+			if(is_dir($folder_name . '/' . $f)) {
 				
 
 				// The path is a folder
@@ -33,7 +37,7 @@ function scan($dir){
 				$files[] = array(
 					"name" => $f,
 					"type" => "folder",
-					"path" => ltrim($dir . '/' . $f,'../')
+					"path" => ltrim($folder_name . '/' . $f,'../')
 					// "items" => scan($dir . '/' . $f) // Recursively get the contents of the folder
 				);
 			}
@@ -58,8 +62,8 @@ function scan($dir){
 					$files[] = array(
 						"name" => $f,
 						"type" => "file",
-						"path" => ltrim($dir . '/' . $f,'../'),
-						"size" => filesize($dir . '/' . $f) // Gets the size of this file
+						"path" => ltrim($folder_name . '/' . $f,'../'),
+						"size" => filesize($folder_name . '/' . $f) // Gets the size of this file
 					);
 				}
 			}
@@ -79,7 +83,8 @@ header('Content-type: application/json');
 echo json_encode(array(
 	"name" => "files",
 	"type" => "folder",
-	"path" => $dir,
+	"path" => $folder_name,
+	"domain" => $domain,
 	"items" => $response
 ));
 
