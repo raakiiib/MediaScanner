@@ -85,8 +85,7 @@ function outputFiles($path){
         // echo "ERROR: The directory does not exist."."<br>";
     }
 }
-$scanning_folder_name=$_SERVER["DOCUMENT_ROOT"].'/FTP/'.$type;
-
+$scanning_folder_name=$_SERVER["DOCUMENT_ROOT"].'/files/'.$type;
 $global_data=array();
 outputFiles($scanning_folder_name);
 $send_data[]=array('send_data'=>$global_data);
