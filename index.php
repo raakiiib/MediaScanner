@@ -1,5 +1,5 @@
 <?php
-include "print_types.php";
+// include "print_types.php";
 
 function myUrlEncode($string) {
     $replacements = array('%21', '%2A', '%27', '%28', '%29', '%3B', '%40', '%26', '%3D', '%2B', '%24', '%2C','%3F', '%23', '%5B', '%5D',"%20","/K");
@@ -8,7 +8,7 @@ function myUrlEncode($string) {
 }
 
 
-set_error_handler('exceptions_error_handler');
+//set_error_handler('exceptions_error_handler');
 function exceptions_error_handler($severity, $message, $filename, $lineno) {
     if (error_reporting() == 0) {
         return;
@@ -42,12 +42,11 @@ function check_folder($folder_name,$folder_path){
                 $data['year']=date("Y");
             }else{
                 $data['path']='http://'.myUrlEncode(str_replace($_SERVER["DOCUMENT_ROOT"],$_SERVER["SERVER_ADDR"],$folder_path."/".$folder_name.'/'));
-                // $data['path']=$folder_path;
                 array_push($global_data,$data);
             }
         }
         else {
-        // echo "it is not a movie folder";
+        echo "it is not a movie folder";
         }       
     } catch (Exception $e) {
     }
@@ -60,27 +59,20 @@ function outputFiles($path){
         $result = scandir($path);
         // Filter out the current (.) and parent (..) directories
         $files = array_diff($result, array('.', '..'));
-
-
         if(count($files) > 0){
             // Loop through retuned array
             foreach($files as $file){
                 if(is_file("$path/$file")){
-                    // Display filename
-                    // echo "--------------FILE INFO STARTS --------------"."<br>";
-                    // echo $file . "<br>";
-                    // echo $path. "<br>";
-                    // echo "--------------FILE INFO ENDS --------------"."<br>";
                 } else if(is_dir("$path/$file")){                                        
                     check_folder($file,$path);                    
                     outputFiles("$path/$file");
                 }
             }
         } else{
-            // echo "ERROR: No files found in the directory.".'<br>';
+            echo "ERROR: No files found in the directory.".'<br>';
         }
     } else {
-        // echo "ERROR: The directory does not exist."."<br>";
+        echo "ERROR: The directory does not exist."."<br>";
     }
 }
 $scanning_folder_name=$_SERVER["DOCUMENT_ROOT"].'/files/'.$type;
