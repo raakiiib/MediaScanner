@@ -8,7 +8,7 @@ function myUrlEncode($string) {
 }
 
 
-//set_error_handler('exceptions_error_handler');
+set_error_handler('exceptions_error_handler');
 function exceptions_error_handler($severity, $message, $filename, $lineno) {
     if (error_reporting() == 0) {
         return;
@@ -32,7 +32,7 @@ function check_folder($folder_name,$folder_path){
     {           
         $movie_name = str_replace($match[0],"",$folder_name);
         $movie_year=$match[1];
-        if(strlen($movie_name)!=0  && strlen($movie_year)!=0){
+        if(strlen($movie_name) !=0  && strlen($movie_year)!=0){
             $movie_year=$match[1];
             $data = array();
             $data['title']=trim($movie_name);
@@ -46,7 +46,7 @@ function check_folder($folder_name,$folder_path){
             }
         }
         else {
-        echo "it is not a movie folder";
+            // echo "it is not a movie folder";
         }       
     } catch (Exception $e) {
     }
@@ -69,10 +69,10 @@ function outputFiles($path){
                 }
             }
         } else{
-            echo "ERROR: No files found in the directory.".'<br>';
+            // echo "ERROR: No files found in the directory.".'<br>';
         }
     } else {
-        echo "ERROR: The directory does not exist."."<br>";
+        // echo "ERROR: The directory does not exist."."<br>";
     }
 }
 $scanning_folder_name=$_SERVER["DOCUMENT_ROOT"].'/files/'.$type;
